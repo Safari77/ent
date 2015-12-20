@@ -1,12 +1,12 @@
 
 #   Unix make file for random test program
 
-CC = gcc
-CFLAGS = -g -Wall
+CC?= gcc
+CFLAGS = -Wall -flto -O3 -march=native -D_FORTIFY_SOURCE=2 -fPIC -fstack-protector-strong
 #CFLAGS = -O
 
 ent:	ent.o iso8859.o randtest.o chisq.o
-	$(CC) $(CFLAGS) ent.o iso8859.o randtest.o chisq.o -o ent -lm
+	$(CC) $(CFLAGS) ent.o iso8859.o randtest.o chisq.o -o ent -lm -flto -pie -Wl,-z,relro -Wl,-z,now
 
 ent.c:	iso8859.h randtest.h
 
